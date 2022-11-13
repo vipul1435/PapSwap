@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 
+// import 'dart:js';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:papswap/widgets/posting_screen.dart';
+import 'package:papswap/widgets/post_card.dart';
 import 'package:papswap/widgets/styling.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,15 +23,10 @@ class _HomePageState extends State<HomePage> {
       throw 'Could not launch $_url';
     }
   }
-  // _launchurl() async {
-  //   const url = "https://www.google.com";
-  //   if (await canLaunchUrlString(url)) {
-  //     await launchUrlString(url);
-  //   } else {
-  //     throw "Could not launch the url";
-  //   }
-  // }
-
+  String? uid;
+  setuseruid() async{
+    uid = FirebaseAuth.instance.currentUser!.uid.toString();
+  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -40,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     final imageSizeMultiplier = blockWidth;
     final heightMultiplier = blockHeight;
     final widthMultiplier = blockWidth;
+    setuseruid();
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -85,6 +85,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -282,7 +283,32 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             AppThemePapswap().freeboxh(8),
-            PostingScreen(),
+            StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection('posts').snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Container(
+                  height: 622,
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 4),
+                      child: PostingCard(
+                        snap: snapshot.data!.docs[index].data(),uid: uid,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            // PostingScreen(),
           ],
         ),
       ),
