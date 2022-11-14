@@ -27,16 +27,31 @@ class PostingCard extends StatefulWidget {
 }
 
 class _PostingCardState extends State<PostingCard> {
-
   bool isLiked = false;
-  int likecount = 0;
 
-   final uid = FirebaseAuth.instance.currentUser!.uid;
+  Future<void> likeprocess() async {
+    try {
+      if(widget.snap['like_data'].contains(widget.uid.toString().trim())){
+        await FirebaseFirestore.instance.collection('posts').doc(widget.snap['post_id'].toString().trim()).update({
+          'like':widget.snap['like']-1,
+          'like_data': FieldValue.arrayRemove([widget.uid.toString().trim()])
+        });
+      } else{
+        await FirebaseFirestore.instance.collection('posts').doc(widget.snap['post_id'].toString().trim()).update({
+          'like':widget.snap['like']+1,
+          'like_data': FieldValue.arrayUnion([widget.uid.toString().trim()])
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   final imageurl =
       'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q=';
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       // color: Colors.red,
@@ -48,10 +63,6 @@ class _PostingCardState extends State<PostingCard> {
           // color: Colors.blue,
           borderRadius: BorderRadius.circular(10),
         ),
-        // child: Container(
-        //     decoration: BoxDecoration(
-        //         color: Colors.red, borderRadius: BorderRadius.circular(10),
-        // ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +192,7 @@ class _PostingCardState extends State<PostingCard> {
                 //   child: FittedBox(
                 // child:
                 Text(
-                  widget.uid,
+                  widget.snap['post_id'],
                   // result[index].fields.username.stringValue,
                   style: TextStyle(fontSize: 16),
                 ),
@@ -210,15 +221,18 @@ class _PostingCardState extends State<PostingCard> {
                     constraints: BoxConstraints(minHeight: 5),
                     padding: EdgeInsets.all(0),
                     alignment: Alignment.bottomLeft,
-                    onPressed: () {
+                    onPressed: () async {
+                      await likeprocess();
                     },
-                    icon: !isLiked? Icon(
-                      Icons.local_fire_department_sharp,
-                      color: Color.fromARGB(255, 101, 101, 101),
-                    ):Icon(
-                      Icons.local_fire_department_sharp,
-                      color: Color.fromARGB(255, 255, 0, 0),
-                    ),
+                    icon: !widget.snap['like_data'].contains(widget.uid.toString().trim())
+                        ? Icon(
+                            Icons.local_fire_department_sharp,
+                            color: Color.fromARGB(255, 101, 101, 101),
+                          )
+                        : Icon(
+                            Icons.local_fire_department_sharp,
+                            color: Color.fromARGB(255, 255, 0, 0),
+                          ),
                   ),
                   // Container(
                   //   // color: Colors.green,
@@ -309,7 +323,7 @@ class _PostingCardState extends State<PostingCard> {
 
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      likecount.toString(),
+                      widget.snap['like'].toString(),
                       // snap['naman'],
                       style: TextStyle(fontSize: 12),
                     ),
@@ -334,4 +348,3 @@ class _PostingCardState extends State<PostingCard> {
     );
   }
 }
-
