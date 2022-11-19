@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
+// ignore_for_file: prefer_const_constructors, unused_local_variable, sized_box_for_whitespace
 
 // import 'dart:js';
 
@@ -24,6 +24,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
   String? uid;
+  String check = "ok";
+  bool fl = false;
   setuseruid() async{
     uid = FirebaseAuth.instance.currentUser!.uid.toString();
   }
@@ -100,7 +102,36 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="ok";
+                        });
+                      },
+                      child: Container(
+                        // width: 70,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(58, 202, 202, 202),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(40)),
+                        child: Center(
+                            child: Text(
+                          '   All   ',
+                          style: TextStyle(color: Colors.black),
+                        )),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          check = "Ministry of Development";
+                        });
+                      },
                       child: Container(
                         // width: 170,
                         decoration: BoxDecoration(
@@ -123,7 +154,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Ministry of Rural area Development";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -144,7 +179,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Ministry of Child Development";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -165,7 +204,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Ministry of Defence";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -186,7 +229,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Road and transportation ministry";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -207,7 +254,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Ministry of Educational Development";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -228,7 +279,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Health Ministry";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -249,7 +304,11 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          check="Home Ministry";
+                        });
+                      },
                       child: Container(
                         // width: 70,
                         decoration: BoxDecoration(
@@ -293,16 +352,21 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return Container(
+                return  Container(
                   height: 622,
                   child: ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 4),
-                      child: PostingCard(
+                      child:
+                      check=="ok"? PostingCard(
                         snap: snapshot.data!.docs[index].data(),uid: uid,
-                      ),
+                      ):
+                      check.trim()==snapshot.data!.docs[index].data()['catagory'].toString().trim()?
+                      PostingCard(
+                        snap: snapshot.data!.docs[index].data(),uid: uid,
+                      ):SizedBox(height: 0,),
                     ),
                   ),
                 );

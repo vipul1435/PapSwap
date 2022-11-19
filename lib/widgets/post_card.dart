@@ -192,7 +192,7 @@ class _PostingCardState extends State<PostingCard> {
                 //   child: FittedBox(
                 // child:
                 Text(
-                  widget.snap['post_id'],
+                  widget.snap['catagory'],
                   // result[index].fields.username.stringValue,
                   style: TextStyle(fontSize: 16),
                 ),
@@ -292,7 +292,7 @@ class _PostingCardState extends State<PostingCard> {
                       constraints: BoxConstraints(minHeight: 5),
                       alignment: Alignment.bottomLeft,
                       onPressed: () async {
-                        final uri = Uri.parse(imageurl);
+                        final uri = Uri.parse(widget.snap['image']);
                         final res = await http.get(uri);
                         final bytes = res.bodyBytes;
 
@@ -300,7 +300,7 @@ class _PostingCardState extends State<PostingCard> {
                         final path = '${temp.path}/image.jpg';
                         File(path).writeAsBytesSync(bytes);
 
-                        await Share.shareFiles([path]);
+                        await Share.shareFiles([path],text: 'See the latest pilocies by Goverment and Share your Opinion');
                       },
                       icon: Icon(
                         Icons.share,
