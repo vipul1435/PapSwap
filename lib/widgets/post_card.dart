@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:papswap/widgets/swap_reswap.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:papswap/widgets/forgot_password.dart';
@@ -250,7 +251,14 @@ class _PostingCardState extends State<PostingCard> {
                     padding: EdgeInsets.all(0),
                     constraints: BoxConstraints(minHeight: 5),
                     alignment: Alignment.topLeft,
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(elevation: 10,enableDrag: true,isDismissible: true,shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                      ),
+                      context: context,
+                      builder: (context) => ReSwap(link: widget.snap['image']),
+                      );
+                    },
                     icon: Icon(
                       Icons.swap_horiz,
                       color: Color.fromARGB(255, 101, 101, 101),
