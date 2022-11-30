@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:papswap/widgets/loginpage.dart';
 // import 'package:papswap/models/app/color_const.dart';
 // import 'package:papswap/services/authservice/authservice.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -225,9 +226,11 @@ class _SettingScreenState extends State<SettingScreen> {
                               'LOGOUT',
                               style: TextStyle(color: Colors.red),
                             ),
-                            onPressed: () async {
+                            onPressed: () {
                               FirebaseAuth.instance.signOut();
-                              // AuthService().logout(context);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+
                             },
                           ),
                         ],

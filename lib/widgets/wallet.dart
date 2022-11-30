@@ -3,9 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:papswap/widgets/offers.dart';
+import 'package:papswap/widgets/provider.dart';
 import 'package:papswap/widgets/styling.dart';
-import 'package:papswap/widgets/userdata.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -14,9 +16,23 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+  
+  DataController? dataController;
+  String val='0';
+  @override
+  void initState() {
+    super.initState();
+    dataController = Get.put(DataController());
+    try{
+       val=dataController!.myDocumnet!.get('wallet').toString();
+    } catch(e){
+      val='0';
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: NestedScrollView(
@@ -94,7 +110,7 @@ class _WalletPageState extends State<WalletPage> {
                                       Container(
                                         color: Colors.transparent,
                                         child: Text(
-                                          '123',
+                                          val,
                                           style: TextStyle(fontSize: 24),
                                         ),
                                       ),

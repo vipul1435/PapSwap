@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:papswap/widgets/bottomnavigationbar.dart';
 import 'package:papswap/widgets/loginpage.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -22,14 +22,13 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             return const BottomNavigationPage();
-          }
-          else {
+          } else {
             return const LoginWidget();
           }
         },
-        ),
+      ),
       // home: AuthScreen(),
     );
   }

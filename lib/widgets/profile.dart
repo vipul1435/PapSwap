@@ -1,15 +1,13 @@
 // ignore_for_file: override_on_non_overriding_member, must_be_immutable, unused_import, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sort_child_properties_last, sized_box_for_whitespace, avoid_web_libraries_in_flutter, unused_field
-
-// import 'dart:html';
-
-// import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:papswap/widgets/bottomnavigationbar.dart';
 import 'package:papswap/widgets/homepage.dart';
 import 'package:papswap/widgets/profilesetting.dart';
+import 'package:papswap/widgets/provider.dart';
 import 'package:papswap/widgets/styling.dart';
 import 'package:papswap/widgets/wallet.dart';
 
@@ -20,6 +18,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  DataController? dataController;
+  String email='';
+  String username='';
+
+  @override
+  void initState() {
+    super.initState();
+    dataController = Get.put(DataController());
+    try{
+       email=dataController!.myDocumnet!.get('email').toString();
+    } catch(e){
+      email='';
+    }
+    try{
+       username=dataController!.myDocumnet!.get('username').toString();
+    } catch(e){
+      username='';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 AppThemePapswap().freeboxw(26),
                 CircleAvatar(
                   radius: 34,
-                  backgroundImage: AssetImage('pictures1/Final logo .PNG'),
+                  backgroundImage: AssetImage('assets/finallogo.PNG'),
                 ),
                 AppThemePapswap().freeboxw(20),
                 Container(
@@ -86,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       AppThemePapswap().freeboxh(6),
                       Text(
-                        'naman',
+                        username,
                         style: TextStyle(
                           letterSpacing: 1,
                           height: 1,
@@ -97,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       AppThemePapswap().freeboxh(10),
                       Text(
-                        'namanshukla8707@gmail.com',
+                        email,
                         style: TextStyle(
                           fontSize: 17,
                           color: Colors.grey,

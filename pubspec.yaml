@@ -31,6 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^4.6.5
   cloud_firestore: ^3.5.1
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.2
@@ -46,7 +47,6 @@ dependencies:
   animated_text_kit: ^4.2.2
   image_picker: ^0.8.6
   permission_handler: ^10.2.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
