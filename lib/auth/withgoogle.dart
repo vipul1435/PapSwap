@@ -23,32 +23,14 @@ googleLogin() async {
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'username':  reslut.displayName.toString(),
           'email': reslut.email.toString(),
+          'dateJoined':DateTime.now().toString(),
+          'superCoinVal':5,
+          'superCoins':[],
+          'userImage':'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alamy.com%2Fstock-photo%2Fpsg-coupe-de-france-football.html%3Fpage%3D6&psig=AOvVaw3iCw33V6EHXzAsjBhlbaYm&ust=1670019200901000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIiM5bu42fsCFQAAAAAdAAAAABAE',
+           'userType':'viewer',
+           'wallet':5
       });
-      // print("Result $reslut");
-      // print(reslut.displayName);
-      // print(reslut.email);
-      // print(reslut.photoUrl);
-
     } catch (error) {
       // print(error);
     }
   }
-
-
-
-// Future<UserCredential> signInWithGoogle() async {
-//   // Trigger the authentication flow
-//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-//   // Obtain the auth details from the request
-//   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-//   // Create a new credential
-//   final credential = GoogleAuthProvider.credential(
-//     accessToken: googleAuth?.accessToken,
-//     idToken: googleAuth?.idToken,
-//   );
-
-//   // Once signed in, return the UserCredential
-//   return await FirebaseAuth.instance.signInWithCredential(credential);
-// }

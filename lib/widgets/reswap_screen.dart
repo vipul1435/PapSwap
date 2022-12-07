@@ -1,15 +1,27 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_unnecessary_containers, unnecessary_import, prefer_typing_uninitialized_variables, avoid_print, unused_import, non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_unnecessary_containers, unnecessary_import, prefer_typing_uninitialized_variables, unused_import, non_constant_identifier_names, use_build_context_synchronously, avoid_print
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:papswap/widgets/reswap_data.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ReSwapScreen extends StatefulWidget {
   final link;
+  final category;
+  final posttext;
+  final reswps;
+  final uid;
+  final postid;
+
   const ReSwapScreen({
     Key? key,
     required this.link,
+    required this.category,
+    required this.postid,
+    required this.posttext,
+    required this.reswps,
+    required this.uid
   }) : super(key: key);
 
   @override
@@ -17,7 +29,9 @@ class ReSwapScreen extends StatefulWidget {
 }
 
 class _ReSwapScreenState extends State<ReSwapScreen> {
-  String SelectedImagepath = '';
+  String SelectedfilePath='';
+  String filepath='';
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     print(widget.link);
@@ -61,7 +75,11 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                         ),
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
-                      onPressed: () {},
+                      onPressed: () async{
+                       await reswapData(filepath: filepath , text: controller.text ,
+                       image: widget.link, category: widget.category, posttext: widget.posttext,
+                        reswaps: widget.reswps, uid:widget.uid, postId: widget.uid);
+                      },
                       child: Row(
                         children: [
                           Text('Reswap'),
@@ -93,7 +111,7 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                   ),
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage('pictures1/Final logo .PNG'),
+                    backgroundImage: AssetImage('assets/finallogo.PNG'),
                   ),
                   SizedBox(
                     width: 20,
@@ -123,12 +141,15 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                             await Permission.storage.request();
                         print('heelo');
                         if (StorageStatus == PermissionStatus.granted) {
-                          SelectedImagepath = await selectImageFromGallery();
+                          SelectedfilePath= await selectImageFromGallery();
+                          
                           print('Image_Path:-');
-                          print(SelectedImagepath);
-                          if (SelectedImagepath != '') {
+                          print(SelectedfilePath);
+                          if (SelectedfilePath != '') {
                             // Navigator.pop(context);
-                            setState(() {});
+                            setState(() {
+                              filepath = SelectedfilePath;
+                            });
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("No Image Selected !"),
@@ -174,6 +195,7 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextField(
+                    controller: controller,
                     textAlignVertical: TextAlignVertical.center,
                     keyboardType: TextInputType.emailAddress,
                     cursorHeight: 22,
@@ -192,7 +214,7 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: SelectedImagepath == ''
+                child: SelectedfilePath==''
                     ? SizedBox(height: 0)
                     : Column(
                         children: [
@@ -212,9 +234,8 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                                 child: Image(
                                   fit: BoxFit.fill,
                                   image: FileImage(
-                                    File(SelectedImagepath),
-                                    // height: 200,
-                                    // width: 200,
+                                    File(SelectedfilePath),
+                                   
                                   ),
                                 ),
                               ),
@@ -252,11 +273,6 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                   ),
                 ),
               ),
-              // Container(
-              //   height: 10,
-              //   width: double.infinity,
-              //   color: Colors.green,
-              // )
             ],
           ),
         ),

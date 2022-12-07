@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:papswap/widgets/loginpage.dart';
 // import 'package:papswap/models/app/color_const.dart';
 // import 'package:papswap/services/authservice/authservice.dart';
@@ -227,6 +228,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
+                              Get.deleteAll();
                               FirebaseAuth.instance.signOut();
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();

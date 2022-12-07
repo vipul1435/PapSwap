@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, sized_box_for_whitespace
 
-// import 'dart:js';
+// ignore_for_file: unused_local_variable, prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:papswap/widgets/post_card.dart';
+import 'package:papswap/widgets/filtered_data.dart';
+import 'package:papswap/widgets/postingscreen.dart';
 import 'package:papswap/widgets/styling.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,12 +22,14 @@ class _HomePageState extends State<HomePage> {
       throw 'Could not launch $_url';
     }
   }
+
   String? uid;
   String check = "ok";
   bool fl = false;
-  setuseruid() async{
+  setuseruid() async {
     uid = FirebaseAuth.instance.currentUser!.uid.toString();
   }
+  
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -87,7 +88,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="ok";
+                          check = "ok";
                         });
                       },
                       child: Container(
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Ministry of Rural area Development";
+                          check = "Ministry of Rural area Development";
                         });
                       },
                       child: Container(
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Ministry of Child Development";
+                          check = "Ministry of Child Development";
                         });
                       },
                       child: Container(
@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Ministry of Defence";
+                          check = "Ministry of Defence";
                         });
                       },
                       child: Container(
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Road and transportation ministry";
+                          check = "Road and transportation ministry";
                         });
                       },
                       child: Container(
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Ministry of Educational Development";
+                          check = "Ministry of Educational Development";
                         });
                       },
                       child: Container(
@@ -281,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Health Ministry";
+                          check = "Health Ministry";
                         });
                       },
                       child: Container(
@@ -306,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          check="Home Ministry";
+                          check = "Home Ministry";
                         });
                       },
                       child: Container(
@@ -342,37 +342,8 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             AppThemePapswap().freeboxh(8),
-            StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection('posts').snapshots(),
-              builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return  Container(
-                  height: 622,
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 4),
-                      child:
-                      check=="ok"? PostingCard(
-                        snap: snapshot.data!.docs[index].data(),uid: uid,
-                      ):
-                      check.trim()==snapshot.data!.docs[index].data()['catagory'].toString().trim()?
-                      PostingCard(
-                        snap: snapshot.data!.docs[index].data(),uid: uid,
-                      ):SizedBox(height: 0,),
-                    ),
-                  ),
-                );
-              },
-            ),
-            // PostingScreen(),
+            check=='ok' ? PostingSCreen()
+            : FilteredScreen(catagory: check)
           ],
         ),
       ),

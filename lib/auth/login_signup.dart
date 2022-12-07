@@ -50,9 +50,6 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   signingoogle() async{
-    setState(() {
-      isClickedForgoogleAuth=true;
-    });
     await googleLogin();
     setState(() {
       isClickedForgoogleAuth=false;

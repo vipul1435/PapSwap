@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:papswap/widgets/offers.dart';
 import 'package:papswap/widgets/provider.dart';
@@ -29,7 +28,7 @@ class _WalletPageState extends State<WalletPage> {
       val='0';
     }
   }
-
+  String id = DateTime.now().millisecondsSinceEpoch.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +49,6 @@ class _WalletPageState extends State<WalletPage> {
                   IconButton(
                       tooltip: 'Wallet log',
                       onPressed: () {
-                        // Navigator.of(context).push(PageTransition(
-                        //     child: const TransactionsScreen(),
-                        //     type: PageTransitionType.topToBottom));
                       },
                       icon: const Icon(
                         Icons.keyboard_arrow_down,
@@ -60,15 +56,6 @@ class _WalletPageState extends State<WalletPage> {
                         size: 28,
                       )),
                 ],
-                // bottom: AppBar(
-                //   toolbarHeight: 100,
-                //   elevation: 0,
-                //   backgroundColor: Colors.transparent,
-                //   // title: WalletCard(
-                //   //   showadfn: _showRewardedAd,
-                //   //   userData: userData,
-                //   // ),
-                // ),
               ),
             ];
            

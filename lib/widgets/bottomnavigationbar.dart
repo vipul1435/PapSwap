@@ -6,25 +6,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:papswap/widgets/homepage.dart';
 import 'package:papswap/widgets/profile.dart';
+import 'package:papswap/widgets/provider.dart';
 import 'package:papswap/widgets/styling.dart';
 import 'package:papswap/widgets/wallet.dart';
 
 class BottomNavigationPage extends StatefulWidget {
   const BottomNavigationPage({super.key});
-
   @override
   State<BottomNavigationPage> createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  DataController? dataController;
+  @override
+  void initState() {
+    super.initState();
+    dataController = Get.put(DataController());
+  }
   int currentIndex1 = 0;   
    final screens = [
     HomePage(),
     WalletPage(),
     ProfilePage(),
    ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

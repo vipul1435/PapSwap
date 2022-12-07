@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:papswap/auth/authprocess.dart';
 import 'package:papswap/widgets/forgot_password.dart';
+import 'package:papswap/widgets/indegator.dart';
 import 'package:papswap/widgets/styling.dart';
 
 import '../auth/withgoogle.dart';
@@ -25,7 +26,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   bool _isHidden = true;
 
-    bool isClickedForAuth = false;
+  bool isClickedForAuth = false;
 
   bool isClickedForgoogleAuth = false;
 
@@ -60,9 +61,6 @@ startAuthentication() async {
   }
   signingoogle() async{
     print('try for google');
-    setState(() {
-      isClickedForgoogleAuth=true;
-    });
     await googleLogin();
     setState(() {
       isClickedForgoogleAuth=false;
@@ -391,11 +389,9 @@ startAuthentication() async {
                           ),
                           child: isLogin
                             ? flag
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white)
+                                ? const Center(child: CustomProgressIndicator(),)
                                 : isClickedForAuth
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.white)
+                                    ? const Center(child: CustomProgressIndicator(),)
                                     : Text(
                                         "Login",
                                         style: TextStyle(
@@ -404,11 +400,9 @@ startAuthentication() async {
                                       ),
                                       )
                             : flag
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white)
+                                ? const Center(child: CustomProgressIndicator(),)
                                 : isClickedForAuth
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.white)
+                                    ? const Center(child: CustomProgressIndicator(),)
                                     : Text(
                                         "Signup",
                                         style: TextStyle(
@@ -456,6 +450,9 @@ startAuthentication() async {
                         margin: const EdgeInsets.symmetric(vertical: 0),
                         child: ElevatedButton(
                           onPressed: () {
+                            setState(() {
+                              isClickedForgoogleAuth=true;
+                            });
                             signingoogle();
                           },
                           style: ButtonStyle(
@@ -497,7 +494,8 @@ startAuthentication() async {
                                  
                                   AppThemePapswap()
                                       .freeboxw(4 * widthMultiplier),
-                                  Text(
+                                      isClickedForgoogleAuth?Center(child: CustomProgressIndicator(),)
+                                      : Text(
                                     'Continue with Google',
                                     style: TextStyle(
                                       color: Colors.white,

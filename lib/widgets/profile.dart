@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:papswap/widgets/bottomnavigationbar.dart';
+import 'package:papswap/widgets/flames_post.dart';
 import 'package:papswap/widgets/homepage.dart';
 import 'package:papswap/widgets/profilesetting.dart';
 import 'package:papswap/widgets/provider.dart';
@@ -182,9 +182,9 @@ class _ProfilePageState extends State<ProfilePage> {
             // child:
             Container(
               color: Colors.green,
-              height: 300,
+              height: 441,
               child: DefaultTabController(
-                length: 3,
+                length: 2,
                 initialIndex: 1,
                 child: Scaffold(
                   appBar: TabBar(
@@ -197,9 +197,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontSize: 14,
                     ),
                     tabs: [
-                      Tab(
-                        text: 'Swap',
-                      ),
                       Tab(
                         text: 'Reswap',
                       ),
@@ -217,18 +214,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     // controller: TabController(length: 1),
                     children: [
                       Center(
-                        child: Text(
-                          'naman1',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
+                        child:Text('naman2'),
                       ),
                       Center(
-                        child: Text('naman2'),
-                      ),
-                      Center(
-                        child: Text('naman3'),
+                        child: FlamesPost(),
                       ),
                     ],
                   ),

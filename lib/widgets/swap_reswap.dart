@@ -2,6 +2,8 @@
 
 // import 'dart:html';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -10,10 +12,12 @@ import 'package:papswap/widgets/styling.dart';
 import 'package:http/http.dart' as http;
 
 class ReSwap extends StatefulWidget {
-  final link;
+  final snap;
+  final uid;
   const ReSwap({
     Key? key,
-    required this.link,
+    required this.snap,
+    required this.uid,
   }) : super(key: key);
 
   @override
@@ -52,7 +56,12 @@ class _ReSwapState extends State<ReSwap> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => ReSwapScreen(
-                  link: widget.link,
+                  link: widget.snap['image'],
+                  category: widget.snap['catagory'],
+                  postid: widget.snap['post_id'],
+                  posttext: widget.snap['feedtext'],
+                  reswps: widget.snap['reswaps'],
+                  uid: widget.uid,
                 ),
               ),
             );
