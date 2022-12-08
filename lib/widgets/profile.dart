@@ -8,6 +8,7 @@ import 'package:papswap/widgets/flames_post.dart';
 import 'package:papswap/widgets/homepage.dart';
 import 'package:papswap/widgets/profilesetting.dart';
 import 'package:papswap/widgets/provider.dart';
+import 'package:papswap/widgets/reswap_post.dart';
 import 'package:papswap/widgets/styling.dart';
 import 'package:papswap/widgets/wallet.dart';
 
@@ -214,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     // controller: TabController(length: 1),
                     children: [
                       Center(
-                        child:Text('naman2'),
+                        child:ReswapPost(),
                       ),
                       Center(
                         child: FlamesPost(),

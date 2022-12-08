@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:papswap/widgets/reswap_data.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -78,7 +79,8 @@ class _ReSwapScreenState extends State<ReSwapScreen> {
                       onPressed: () async{
                        await reswapData(filepath: filepath , text: controller.text ,
                        image: widget.link, category: widget.category, posttext: widget.posttext,
-                        reswaps: widget.reswps, uid:widget.uid, postId: widget.uid);
+                        reswaps: widget.reswps, uid:widget.uid, postId: widget.postid);
+                  Navigator.of(context).pop();
                       },
                       child: Row(
                         children: [
